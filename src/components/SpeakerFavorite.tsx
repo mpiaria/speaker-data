@@ -8,16 +8,12 @@ type SpeakerFavoriteProps = {
 export default function SpeakerFavorite({ favorite, toggleFavorite }: SpeakerFavoriteProps) {
 	const [isUpdatingFavorite, setIsUpdatingFavorite] = useState(false);
 
-	const doneUpdatingFavorite = (): void => {
-		setIsUpdatingFavorite(false);
-	};
-
 	return (
 		<div className="action paddB1">
 			<span
 				onClick={(_event: MouseEvent<HTMLElement>) => {
 					setIsUpdatingFavorite(true);
-					toggleFavorite(doneUpdatingFavorite);
+					toggleFavorite(() => setIsUpdatingFavorite(false));
 				}}
 			>
 				<i className={`fa orange ${favorite ? "fa-star" : "fa-star-o"}`} /> Favorite
