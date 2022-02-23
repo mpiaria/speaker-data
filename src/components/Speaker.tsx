@@ -1,15 +1,18 @@
+import { useContext } from "react";
+import { SpeakerFilterContext } from "../contexts/SpeakerFilterContext";
+import { SpeakerFilterContextProps } from "../types/contexts";
 import { SpeakerData } from "../types/speaker-data";
 import Sessions from "./Sessions";
 import SpeakerImage from "./SpeakerImage";
 import SpeakerInfo from "./SpeakerInfo";
 
 type SpeakerProps = {
-	showSessions: boolean;
 	speakerData: SpeakerData;
 	toggleFavorite: (callback: () => void) => void;
 };
 
-export default function Speaker({ showSessions, speakerData, toggleFavorite }: SpeakerProps) {
+export default function Speaker({ speakerData, toggleFavorite }: SpeakerProps) {
+	const { showSessions } = useContext<SpeakerFilterContextProps>(SpeakerFilterContext);
 	const { firstName, id, lastName, sessions } = speakerData;
 
 	return (

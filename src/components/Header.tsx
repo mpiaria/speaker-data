@@ -1,10 +1,11 @@
 import Image from "next/image";
 import { useContext } from "react";
 import { ThemeContext } from "../contexts/ThemeContext";
+import { ThemeContextProps } from "../types/contexts";
 import { Theme } from "../types/theme";
 
 export default function Header() {
-	const { theme } = useContext(ThemeContext);
+	const { theme } = useContext<ThemeContextProps>(ThemeContext);
 
 	return (
 		<div className="padT4 padB4">

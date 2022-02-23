@@ -1,11 +1,7 @@
 import { createContext, PropsWithChildren } from "react";
 import useTheme from "../hooks/use-theme";
+import { ThemeContextProps } from "../types/contexts";
 import { Theme } from "../types/theme";
-
-type ThemeContextProps = {
-	setTheme: (theme: string) => void;
-	theme: string;
-};
 
 type ThemeProviderProps = {
 	initialTheme: Theme;

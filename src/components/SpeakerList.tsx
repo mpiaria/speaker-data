@@ -4,11 +4,7 @@ import { LoadingStatus } from "../types/loading-status";
 import { retrieveSpeakerData, SpeakerData } from "../types/speaker-data";
 import Speaker from "./Speaker";
 
-type SpeakerListProps = {
-	showSessions: boolean;
-};
-
-export default function SpeakerList({ showSessions }: SpeakerListProps) {
+export default function SpeakerList() {
 	const { errorMessage, loadingStatus, speakerData, updateSpeaker } = useRequestDelay(2000, retrieveSpeakerData());
 
 	return loadingStatus === LoadingStatus.Failed ? (
@@ -22,7 +18,6 @@ export default function SpeakerList({ showSessions }: SpeakerListProps) {
 					{speakerData.map((speaker: SpeakerData, index: number) => (
 						<Speaker
 							key={index}
-							showSessions={showSessions}
 							speakerData={speaker}
 							toggleFavorite={(callback: () => void) => updateSpeaker(callback, { ...speaker, favorite: !speaker.favorite })}
 						/>
