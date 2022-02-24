@@ -1,6 +1,6 @@
 import { PropsWithChildren, useContext } from "react";
-import ThemeProvider, { ThemeContext } from "../contexts/ThemeContext";
-import { ThemeContextProps } from "../types/contexts";
+import ThemeContextProvider from "../contexts/ThemeContextProvider";
+import { ThemeContext, ThemeContextProps } from "../types/contexts";
 import { Theme } from "../types/theme";
 
 type LayoutProps = {
@@ -9,9 +9,9 @@ type LayoutProps = {
 
 export default function Layout({ children, initialTheme }: PropsWithChildren<LayoutProps>) {
 	return (
-		<ThemeProvider initialTheme={initialTheme}>
+		<ThemeContextProvider initialTheme={initialTheme}>
 			<LayoutWithoutThemeProvider>{children}</LayoutWithoutThemeProvider>
-		</ThemeProvider>
+		</ThemeContextProvider>
 	);
 }
 

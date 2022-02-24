@@ -1,6 +1,5 @@
 import { useContext } from "react";
-import { SpeakerFilterContext } from "../contexts/SpeakerFilterContext";
-import { SpeakerFilterContextProps } from "../types/contexts";
+import { SpeakerFilterContext, SpeakerFilterContextProps } from "../types/contexts";
 import { SpeakerData } from "../types/speaker-data";
 import Sessions from "./Sessions";
 import SpeakerImage from "./SpeakerImage";

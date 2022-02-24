@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { useContext } from "react";
-import { ThemeContext } from "../contexts/ThemeContext";
-import { ThemeContextProps } from "../types/contexts";
+import { ThemeContext, ThemeContextProps } from "../types/contexts";
 import { Theme } from "../types/theme";
 
 export default function Header() {

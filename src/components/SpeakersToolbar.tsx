@@ -1,11 +1,10 @@
 import { ChangeEvent, useContext } from "react";
-import { SpeakerFilterContext } from "../contexts/SpeakerFilterContext";
-import { ThemeContext } from "../contexts/ThemeContext";
-import { SpeakerFilterContextProps, ThemeContextProps } from "../types/contexts";
+import { SpeakerFilterContext, SpeakerFilterContextProps, ThemeContext, ThemeContextProps } from "../types/contexts";
+import { retrieveEventYears } from "../types/speaker-data";
 import { Theme } from "../types/theme";
 
 export default function SpeakersToolbar() {
-	const { setShowSessions, showSessions } = useContext<SpeakerFilterContextProps>(SpeakerFilterContext);
+	const { eventYear, setEventYear, setSearchQuery, setShowSessions, showSessions } = useContext<SpeakerFilterContextProps>(SpeakerFilterContext);
 	const { setTheme, theme } = useContext<ThemeContextProps>(ThemeContext);
 
 	return (
@@ -34,6 +33,37 @@ export default function SpeakersToolbar() {
 								>
 									<option value={Theme.Dark.valueOf()}>Dark</option>
 									<option value={Theme.Light.valueOf()}>Light</option>
+								</select>
+							</label>
+						</li>
+						<li>
+							<div className="input-group">
+								<input
+									className="form-control"
+									onChange={(event: ChangeEvent<HTMLInputElement>): void => setSearchQuery(event.currentTarget.value?.toLowerCase() || "")}
+									placeholder="Search..."
+									type="text"
+								/>
+								<div className="input-group-append">
+									<button className="btn btn-secondary" type="button">
+										<i className="fa fa-search"></i>
+									</button>
+								</div>
+							</div>
+						</li>
+						<li className="d-flex flex-column flex-md-row">
+							<strong>Year</strong>
+							<label className="dropmenu">
+								<select
+									className="form-control"
+									onChange={(event: ChangeEvent<HTMLSelectElement>): void => setEventYear(event.currentTarget.value)}
+									value={eventYear}
+								>
+									{retrieveEventYears().map((year: string, index: number) => (
+										<option key={index} value={year}>
+											{year}
+										</option>
+									))}
 								</select>
 							</label>
 						</li>
