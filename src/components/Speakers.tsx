@@ -1,12 +1,12 @@
-import SpeakerFilterProvider from "../contexts/SpeakerFilterContext";
+import SpeakerFilterContextProvider from "../contexts/SpeakerFilterContextProvider";
 import SpeakerList from "./SpeakerList";
 import SpeakersToolbar from "./SpeakersToolbar";
 
 export default function Speakers() {
 	return (
-		<SpeakerFilterProvider initialShowSessions={false}>
+		<SpeakerFilterContextProvider>
 			<SpeakersToolbar />
 			<SpeakerList />
-		</SpeakerFilterProvider>
+		</SpeakerFilterContextProvider>
 	);
 }
