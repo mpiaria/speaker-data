@@ -1,14 +1,14 @@
 import { useContext } from "react";
-import { SpeakerFilterContext, SpeakerFilterContextProps } from "../types/contexts";
+import { SpeakerContext, SpeakerContextProps, SpeakerFilterContext, SpeakerFilterContextProps } from "../types/contexts";
 import { SessionData } from "../types/speaker-data";
 import Session from "./Session";
 
-type SessionsProps = {
-	sessions: SessionData[];
-};
-
-export default function Sessions({ sessions }: SessionsProps) {
+export default function Sessions() {
+	const {
+		speaker: { sessions },
+	} = useContext<SpeakerContextProps>(SpeakerContext);
 	const { eventYear } = useContext<SpeakerFilterContextProps>(SpeakerFilterContext);
+
 	return (
 		<div className="sessionBox card h-250">
 			{sessions

@@ -1,5 +1,11 @@
 import { createContext } from "react";
+import { SpeakerData } from "./speaker-data";
 import { Theme } from "./theme";
+
+export type SpeakerContextProps = {
+	speaker: SpeakerData;
+	updateSpeaker: (callback: () => void, speaker: SpeakerData) => void;
+};
 
 export type SpeakerFilterContextProps = {
 	eventYear: string;
@@ -14,6 +20,11 @@ export type ThemeContextProps = {
 	setTheme: (theme: string) => void;
 	theme: string;
 };
+
+export const SpeakerContext = createContext<SpeakerContextProps>({
+	speaker: { bio: "", company: "", favorite: false, firstName: "", id: "", lastName: "", sessions: [], twitterHandle: "" },
+	updateSpeaker: (_callback: () => void, _speaker: SpeakerData) => {},
+});
 
 export const SpeakerFilterContext = createContext<SpeakerFilterContextProps>({
 	eventYear: "",
