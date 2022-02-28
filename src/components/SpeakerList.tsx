@@ -25,11 +25,7 @@ export default function SpeakerList() {
 								speaker.firstName.toLowerCase().includes(searchQuery.toLowerCase()) || speaker.lastName.toLowerCase().includes(searchQuery.toLowerCase()),
 						)
 						.map((speaker: SpeakerData, index: number) => (
-							<Speaker
-								key={index}
-								speakerData={speaker}
-								toggleFavorite={(callback: () => void) => updateSpeaker(callback, { ...speaker, favorite: !speaker.favorite })}
-							/>
+							<Speaker key={index} speakerData={speaker} updateSpeaker={updateSpeaker} />
 						))}
 				</div>
 			</ReactPlaceholder>

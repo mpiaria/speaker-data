@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { SpeakerContext, SpeakerContextProps } from "../types/contexts";
 import SpeakerFavorite from "./SpeakerFavorite";
 
 type SpeakerInfoProps = {
@@ -10,7 +12,11 @@ type SpeakerInfoProps = {
 	twitterHandle: string;
 };
 
-export default function SpeakerInfo({ bio, company, favorite, firstName, lastName, toggleFavorite, twitterHandle }: SpeakerInfoProps) {
+export default function SpeakerInfo() {
+	const {
+		speaker: { bio, company, favorite, firstName, lastName, twitterHandle },
+	} = useContext<SpeakerContextProps>(SpeakerContext);
+
 	return (
 		<div className="speaker-info">
 			<div className="d-flex justify-content-between mb-3">
@@ -18,7 +24,7 @@ export default function SpeakerInfo({ bio, company, favorite, firstName, lastNam
 					{firstName} {lastName}
 				</h3>
 			</div>
-			<SpeakerFavorite favorite={favorite} toggleFavorite={toggleFavorite} />
+			<SpeakerFavorite />
 			<div>
 				<p className="card-description">{bio}</p>
 				<div className="social d-flex flex-row mt-4">
