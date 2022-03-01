@@ -9,7 +9,13 @@ export default function SpeakerImage() {
 
 	return (
 		<div className="speaker-img d-flex flex-row justify-content-center align-items-center h-300">
-			<Image alt={`${firstName} ${lastName}`} className="contain-fit" height="300" src={`/images/speaker-${id}.jpg`} width="300" />
+			<Image
+				alt={`${firstName} ${lastName}`}
+				className="contain-fit"
+				height="300"
+				src={Number.isNaN(+id) || Number.parseInt(id) > 99999 ? `/images/speaker-99999.jpg` : `/images/speaker-${id}.jpg`}
+				width="300"
+			/>
 		</div>
 	);
 }

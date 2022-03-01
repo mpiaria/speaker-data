@@ -5,10 +5,11 @@ import { SpeakerFilterContext, SpeakerFilterContextProps } from "../types/contex
 import { LoadingStatus } from "../types/loading-status";
 import { retrieveSpeakerData, SessionData, SpeakerData } from "../types/speaker-data";
 import Speaker from "./Speaker";
+import SpeakerAdd from "./SpeakerAdd";
 
 export default function SpeakerList() {
 	const { eventYear, searchQuery } = useContext<SpeakerFilterContextProps>(SpeakerFilterContext);
-	const { errorMessage, loadingStatus, speakerData, updateSpeaker } = useRequestDelay(2000, retrieveSpeakerData());
+	const { deleteSpeaker, errorMessage, insertSpeaker, loadingStatus, speakerData, updateSpeaker } = useRequestDelay(2000, retrieveSpeakerData());
 
 	return loadingStatus === LoadingStatus.Failed ? (
 		<div className="text-danger">
@@ -17,6 +18,7 @@ export default function SpeakerList() {
 	) : (
 		<div className="container speakers-list">
 			<ReactPlaceholder className="speakerslist-placeholder" ready={loadingStatus === LoadingStatus.Successful} rows={15} type="media">
+				<SpeakerAdd eventYear={eventYear} insertSpeaker={insertSpeaker} />
 				<div className="row">
 					{speakerData
 						.filter((speaker: SpeakerData): boolean => speaker.sessions.some((session: SessionData): boolean => session.eventYear === eventYear))
@@ -25,7 +27,7 @@ export default function SpeakerList() {
 								speaker.firstName.toLowerCase().includes(searchQuery.toLowerCase()) || speaker.lastName.toLowerCase().includes(searchQuery.toLowerCase()),
 						)
 						.map((speaker: SpeakerData, index: number) => (
-							<Speaker key={index} speakerData={speaker} updateSpeaker={updateSpeaker} />
+							<Speaker deleteSpeaker={deleteSpeaker} insertSpeaker={insertSpeaker} key={index} speakerData={speaker} updateSpeaker={updateSpeaker} />
 						))}
 				</div>
 			</ReactPlaceholder>
