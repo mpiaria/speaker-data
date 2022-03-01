@@ -20,7 +20,7 @@ export default function useRequestDelay(delayInMillis: number = 1000, initialDat
 
 	const deleteSpeaker = (callback: () => void, speaker: SpeakerData): void => {
 		const updatedSpeakers = speakerData.filter((s: SpeakerData): boolean => s.id !== speaker.id);
-		async function updateWithDelay() {
+		async function deleteWithDelay() {
 			try {
 				await delay(delayInMillis);
 				setSpeakerData(updatedSpeakers);
@@ -31,12 +31,12 @@ export default function useRequestDelay(delayInMillis: number = 1000, initialDat
 				console.log("error thrown in updateWithDelay:", error);
 			}
 		}
-		updateWithDelay();
+		deleteWithDelay();
 	};
 
 	const insertSpeaker = (callback: () => void, speaker: SpeakerData): void => {
 		const updatedSpeakers = [speaker, ...speakerData];
-		async function updateWithDelay() {
+		async function insertWithDelay() {
 			try {
 				await delay(delayInMillis);
 				setSpeakerData(updatedSpeakers);
@@ -47,7 +47,7 @@ export default function useRequestDelay(delayInMillis: number = 1000, initialDat
 				console.log("error thrown in updateWithDelay:", error);
 			}
 		}
-		updateWithDelay();
+		insertWithDelay();
 	};
 
 	const updateSpeaker = (callback: () => void, speaker: SpeakerData): void => {
