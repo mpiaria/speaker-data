@@ -1,6 +1,7 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { LoadingStatus } from "../types/loading-status";
-import { retrieveSpeakerData, SpeakerData } from "../types/speaker-data";
+import { SpeakerData } from "../types/speaker-data";
 
 type RequestSpeakersProps = {
 	deleteSpeaker: (callback: () => void, speaker: SpeakerData) => void;
@@ -11,19 +12,18 @@ type RequestSpeakersProps = {
 	updateSpeaker: (callback: () => void, speaker: SpeakerData) => void;
 };
 
-export default function useRequestDelay(delayInMillis: number = 1000, initialData: SpeakerData[] = []): RequestSpeakersProps {
+const restUrl = "api/speakers";
+
+export default function useApiCalls(): RequestSpeakersProps {
 	const [errorMessage, setErrorMessage] = useState("");
 	const [loadingStatus, setLoadingStatus] = useState(LoadingStatus.Loading);
-	const [speakerData, setSpeakerData] = useState(initialData);
-
-	const delay = async (millis: number): Promise<void> => new Promise((resolve: (val: void) => void) => setTimeout(resolve, millis));
+	const [speakerData, setSpeakerData] = useState([] as SpeakerData[]);
 
 	const deleteSpeaker = (callback: () => void, speaker: SpeakerData): void => {
-		const updatedSpeakers = speakerData.filter((s: SpeakerData): boolean => s.id !== speaker.id);
 		async function deleteWithDelay() {
 			try {
-				await delay(delayInMillis);
-				setSpeakerData(updatedSpeakers);
+				await axios.delete(`${restUrl}/${speaker.id}`);
+				setLoadingStatus(LoadingStatus.Loading);
 				if (callback) {
 					callback();
 				}
@@ -35,11 +35,10 @@ export default function useRequestDelay(delayInMillis: number = 1000, initialDat
 	};
 
 	const insertSpeaker = (callback: () => void, speaker: SpeakerData): void => {
-		const updatedSpeakers = [speaker, ...speakerData];
 		async function insertWithDelay() {
 			try {
-				await delay(delayInMillis);
-				setSpeakerData(updatedSpeakers);
+				await axios.post<SpeakerData>(restUrl, speaker);
+				setLoadingStatus(LoadingStatus.Loading);
 				if (callback) {
 					callback();
 				}
@@ -51,11 +50,10 @@ export default function useRequestDelay(delayInMillis: number = 1000, initialDat
 	};
 
 	const updateSpeaker = (callback: () => void, speaker: SpeakerData): void => {
-		const updatedSpeakers = speakerData.map((s: SpeakerData): SpeakerData => (speaker?.id === s.id ? speaker : s));
 		async function updateWithDelay() {
 			try {
-				await delay(delayInMillis);
-				setSpeakerData(updatedSpeakers);
+				await axios.put<void>(`${restUrl}/${speaker.id}`, speaker);
+				setLoadingStatus(LoadingStatus.Loading);
 				if (callback) {
 					callback();
 				}
@@ -69,8 +67,8 @@ export default function useRequestDelay(delayInMillis: number = 1000, initialDat
 	useEffect((): void | (() => void) => {
 		async function loadSpeakersWithDelay(): Promise<void> {
 			try {
-				await delay(delayInMillis);
-				setSpeakerData(retrieveSpeakerData());
+				const result = await axios.get<SpeakerData[]>(restUrl);
+				setSpeakerData(result.data);
 				setLoadingStatus(LoadingStatus.Successful);
 			} catch (error) {
 				setErrorMessage(String(error));
@@ -78,7 +76,7 @@ export default function useRequestDelay(delayInMillis: number = 1000, initialDat
 			}
 		}
 		loadSpeakersWithDelay();
-	}, [delayInMillis]);
+	}, [loadingStatus]);
 
 	return { deleteSpeaker, errorMessage, insertSpeaker, loadingStatus, speakerData: speakerData, updateSpeaker };
 }

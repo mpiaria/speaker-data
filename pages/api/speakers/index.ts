@@ -19,10 +19,25 @@ export default async function defaultSpeakerHandler(req: NextApiRequest, res: Ne
 	switch (req?.method) {
 		case RequestMethod.GET:
 			const speakers = await retrieveSpeakers(jsonFile);
-			speakers?.length > 0 ? res.status(HttpStatusCode.OK).send(speakers) : res.status(HttpStatusCode.NOT_FOUND).send([]);
+			if (speakers?.length > 0) {
+				res.status(HttpStatusCode.OK);
+				console.log(`GET /api/speakers status: ${res.statusCode}`);
+				res.send(speakers);
+			} else {
+				console.log(`GET /api/speakers status: ${res.statusCode}`);
+				res.send([]);
+			}
 			break;
 		case RequestMethod.POST:
-			(await createSpeaker(jsonFile, speaker)) ? res.status(HttpStatusCode.NO_CONTENT).send() : res.status(HttpStatusCode.BAD_REQUEST).send();
+			if (await createSpeaker(jsonFile, speaker)) {
+				res.status(HttpStatusCode.NO_CONTENT);
+				console.log(`POST /api/speakers status: ${res.statusCode}`);
+				res.send();
+			} else {
+				res.status(HttpStatusCode.BAD_REQUEST);
+				console.log(`POST /api/speakers status: ${res.statusCode}`);
+				res.send();
+			}
 			break;
 		default:
 			break;

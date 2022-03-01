@@ -19,17 +19,43 @@ export default async function speakerWithIdHandler(req: NextApiRequest, res: Nex
 
 	switch (req?.method) {
 		case RequestMethod.DELETE:
-			(await deleteSpeaker(jsonFile, id)) ? res.status(HttpStatusCode.NO_CONTENT).send() : res.status(HttpStatusCode.BAD_REQUEST).send();
+			if (await deleteSpeaker(jsonFile, id)) {
+				res.status(HttpStatusCode.NO_CONTENT);
+				console.log(`DELETE /api/speakers/${id} status: ${res.statusCode}`);
+				res.send();
+			} else {
+				res.status(HttpStatusCode.BAD_REQUEST);
+				console.log(`DELETE /api/speakers/${id} status: ${res.statusCode}`);
+				res.send();
+			}
 			break;
 		case RequestMethod.GET:
 			const speakerFromFile = await retrieveSpeaker(jsonFile, id);
-			speakerFromFile ? res.status(HttpStatusCode.OK).send(speakerFromFile) : res.status(HttpStatusCode.NOT_FOUND).send();
+			if (speakerFromFile) {
+				res.status(HttpStatusCode.OK);
+				console.log(`GET /api/speakers/${id} status: ${res.statusCode}`);
+				res.send(speakerFromFile);
+			} else {
+				res.status(HttpStatusCode.NOT_FOUND);
+				console.log(`GET /api/speakers/${id} status: ${res.statusCode}`);
+				res.send();
+			}
 			break;
 		case RequestMethod.PUT:
-			(await updateSpeaker(jsonFile, id, speakerFromRequest)) ? res.status(HttpStatusCode.NO_CONTENT).send() : res.status(HttpStatusCode.BAD_REQUEST).send();
+			if (await updateSpeaker(jsonFile, id, speakerFromRequest)) {
+				res.status(HttpStatusCode.NO_CONTENT);
+				console.log(`PUT /api/speakers/${id} status: ${res.statusCode}`);
+				res.send();
+			} else {
+				res.status(HttpStatusCode.BAD_REQUEST);
+				console.log(`PUT /api/speakers/${id} status: ${res.statusCode}`);
+				res.send();
+			}
 			break;
 		default:
-			res.status(HttpStatusCode.METHOD_NOT_ALLOWED).send();
+			res.status(HttpStatusCode.METHOD_NOT_ALLOWED);
+			console.log(`${req?.method} /api/speakers/${id} status: ${res.statusCode}`);
+			res.send();
 	}
 }
 

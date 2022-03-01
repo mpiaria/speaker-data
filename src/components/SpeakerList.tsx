@@ -1,15 +1,15 @@
 import { useContext } from "react";
 import ReactPlaceholder from "react-placeholder/lib";
-import useRequestDelay from "../hooks/use-request-delay";
+import useApiCalls from "../hooks/use-api-calls";
 import { SpeakerFilterContext, SpeakerFilterContextProps } from "../types/contexts";
 import { LoadingStatus } from "../types/loading-status";
-import { retrieveSpeakerData, SessionData, SpeakerData } from "../types/speaker-data";
+import { SessionData, SpeakerData } from "../types/speaker-data";
 import Speaker from "./Speaker";
 import SpeakerAdd from "./SpeakerAdd";
 
 export default function SpeakerList() {
 	const { eventYear, searchQuery } = useContext<SpeakerFilterContextProps>(SpeakerFilterContext);
-	const { deleteSpeaker, errorMessage, insertSpeaker, loadingStatus, speakerData, updateSpeaker } = useRequestDelay(2000, retrieveSpeakerData());
+	const { deleteSpeaker, errorMessage, insertSpeaker, loadingStatus, speakerData, updateSpeaker } = useApiCalls();
 
 	return loadingStatus === LoadingStatus.Failed ? (
 		<div className="text-danger">
@@ -24,7 +24,7 @@ export default function SpeakerList() {
 						.filter((speaker: SpeakerData): boolean => speaker.sessions.some((session: SessionData): boolean => session.eventYear === eventYear))
 						.filter(
 							(speaker: SpeakerData): boolean =>
-								speaker.firstName.toLowerCase().includes(searchQuery.toLowerCase()) || speaker.lastName.toLowerCase().includes(searchQuery.toLowerCase()),
+								speaker.firstName?.toLowerCase()?.includes(searchQuery.toLowerCase()) || speaker.lastName?.toLowerCase()?.includes(searchQuery.toLowerCase()),
 						)
 						.map((speaker: SpeakerData, index: number) => (
 							<Speaker deleteSpeaker={deleteSpeaker} insertSpeaker={insertSpeaker} key={index} speakerData={speaker} updateSpeaker={updateSpeaker} />
