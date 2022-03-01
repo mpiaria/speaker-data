@@ -3,7 +3,9 @@ import { LoadingStatus } from "../types/loading-status";
 import { retrieveSpeakerData, SpeakerData } from "../types/speaker-data";
 
 type RequestSpeakersProps = {
+	deleteSpeaker: (callback: () => void, speaker: SpeakerData) => void;
 	errorMessage: string;
+	insertSpeaker: (callback: () => void, speaker: SpeakerData) => void;
 	loadingStatus: LoadingStatus;
 	speakerData: SpeakerData[];
 	updateSpeaker: (callback: () => void, speaker: SpeakerData) => void;
@@ -15,6 +17,38 @@ export default function useRequestDelay(delayInMillis: number = 1000, initialDat
 	const [speakerData, setSpeakerData] = useState(initialData);
 
 	const delay = async (millis: number): Promise<void> => new Promise((resolve: (val: void) => void) => setTimeout(resolve, millis));
+
+	const deleteSpeaker = (callback: () => void, speaker: SpeakerData): void => {
+		const updatedSpeakers = speakerData.filter((s: SpeakerData): boolean => s.id !== speaker.id);
+		async function updateWithDelay() {
+			try {
+				await delay(delayInMillis);
+				setSpeakerData(updatedSpeakers);
+				if (callback) {
+					callback();
+				}
+			} catch (error) {
+				console.log("error thrown in updateWithDelay:", error);
+			}
+		}
+		updateWithDelay();
+	};
+
+	const insertSpeaker = (callback: () => void, speaker: SpeakerData): void => {
+		const updatedSpeakers = [speaker, ...speakerData];
+		async function updateWithDelay() {
+			try {
+				await delay(delayInMillis);
+				setSpeakerData(updatedSpeakers);
+				if (callback) {
+					callback();
+				}
+			} catch (error) {
+				console.log("error thrown in updateWithDelay:", error);
+			}
+		}
+		updateWithDelay();
+	};
 
 	const updateSpeaker = (callback: () => void, speaker: SpeakerData): void => {
 		const updatedSpeakers = speakerData.map((s: SpeakerData): SpeakerData => (speaker?.id === s.id ? speaker : s));
@@ -46,5 +80,5 @@ export default function useRequestDelay(delayInMillis: number = 1000, initialDat
 		loadSpeakersWithDelay();
 	}, [delayInMillis]);
 
-	return { errorMessage, loadingStatus, speakerData: speakerData, updateSpeaker };
+	return { deleteSpeaker, errorMessage, insertSpeaker, loadingStatus, speakerData: speakerData, updateSpeaker };
 }
