@@ -7,11 +7,7 @@ type SpeakerFilterProviderProps = {
 	initialEventYear?: string;
 };
 
-function SpeakerFilterContextProvider({
-	children,
-	initialShowSessions = false,
-	initialEventYear = "2019",
-}: PropsWithChildren<SpeakerFilterProviderProps>) {
+function SpeakerFilterContextProvider({ children, initialShowSessions = false, initialEventYear = "2019" }: PropsWithChildren<SpeakerFilterProviderProps>) {
 	const { eventYear, searchQuery, setEventYear, setSearchQuery, setShowSessions, showSessions } = useSpeakerFilter({ initialEventYear, initialShowSessions });
 
 	return (

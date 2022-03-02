@@ -2,19 +2,9 @@ import { useContext } from "react";
 import { SpeakerContext, SpeakerContextProps } from "../types/contexts";
 import SpeakerFavorite from "./SpeakerFavorite";
 
-type SpeakerInfoProps = {
-	bio: string;
-	company: string;
-	favorite: boolean;
-	firstName: string;
-	lastName: string;
-	toggleFavorite: (callback: () => void) => void;
-	twitterHandle: string;
-};
-
 function SpeakerInfo() {
 	const {
-		speaker: { bio, company, favorite, firstName, lastName, twitterHandle },
+		speaker: { bio, company, firstName, lastName, twitterHandle },
 	} = useContext<SpeakerContextProps>(SpeakerContext);
 
 	return (

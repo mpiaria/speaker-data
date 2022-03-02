@@ -23,7 +23,7 @@ function useRestApi(): RequestSpeakersProps {
 		async function deleteAsynchronously() {
 			try {
 				await axios.delete(`${restUrl}/${speaker.id}`);
-        const result = await axios.get<SpeakerData[]>(restUrl);
+				const result = await axios.get<SpeakerData[]>(restUrl);
 				setSpeakerData(result.data);
 				if (callback) {
 					callback();
@@ -39,7 +39,7 @@ function useRestApi(): RequestSpeakersProps {
 		async function insertAsynchronously() {
 			try {
 				await axios.post<SpeakerData>(restUrl, speaker);
-        const result = await axios.get<SpeakerData[]>(restUrl);
+				const result = await axios.get<SpeakerData[]>(restUrl);
 				setSpeakerData(result.data);
 				if (callback) {
 					callback();
@@ -55,7 +55,7 @@ function useRestApi(): RequestSpeakersProps {
 		async function updateAsynchronously() {
 			try {
 				await axios.put<void>(`${restUrl}/${speaker.id}`, speaker);
-        const result = await axios.get<SpeakerData[]>(restUrl);
+				const result = await axios.get<SpeakerData[]>(restUrl);
 				setSpeakerData(result.data);
 				if (callback) {
 					callback();
