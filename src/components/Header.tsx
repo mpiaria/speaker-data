@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { ThemeContext, ThemeContextProps } from "../types/contexts";
 import { Theme } from "../types/theme";
 
-export default function Header() {
+function Header() {
 	const { theme } = useContext<ThemeContextProps>(ThemeContext);
 
 	return (
@@ -11,7 +11,7 @@ export default function Header() {
 			<div className="container mobile-container">
 				<div className="d-flex justify-content-between">
 					<div>
-						<Image alt="SVCC Home Page" height="25" src="/images/SVCCLogo.png" width="100" />
+						<Image alt="SVCC Home Page" height="25" src="/images/SVCClogo.png" width="100"  />
 					</div>
 					<div className="light">
 						<h4 className="header-title">Silicon Valley Code Camp</h4>
@@ -27,3 +27,5 @@ export default function Header() {
 		</div>
 	);
 }
+
+export default Header;

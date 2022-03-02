@@ -14,16 +14,17 @@ type RequestSpeakersProps = {
 
 const restUrl = "api/speakers";
 
-export default function useApiCalls(): RequestSpeakersProps {
+function useRestApi(): RequestSpeakersProps {
 	const [errorMessage, setErrorMessage] = useState("");
 	const [loadingStatus, setLoadingStatus] = useState(LoadingStatus.Loading);
 	const [speakerData, setSpeakerData] = useState([] as SpeakerData[]);
 
 	const deleteSpeaker = (callback: () => void, speaker: SpeakerData): void => {
-		async function deleteWithDelay() {
+		async function deleteAsynchronously() {
 			try {
 				await axios.delete(`${restUrl}/${speaker.id}`);
-				setLoadingStatus(LoadingStatus.Loading);
+        const result = await axios.get<SpeakerData[]>(restUrl);
+				setSpeakerData(result.data);
 				if (callback) {
 					callback();
 				}
@@ -31,14 +32,15 @@ export default function useApiCalls(): RequestSpeakersProps {
 				console.log("error thrown in updateWithDelay:", error);
 			}
 		}
-		deleteWithDelay();
+		deleteAsynchronously();
 	};
 
 	const insertSpeaker = (callback: () => void, speaker: SpeakerData): void => {
-		async function insertWithDelay() {
+		async function insertAsynchronously() {
 			try {
 				await axios.post<SpeakerData>(restUrl, speaker);
-				setLoadingStatus(LoadingStatus.Loading);
+        const result = await axios.get<SpeakerData[]>(restUrl);
+				setSpeakerData(result.data);
 				if (callback) {
 					callback();
 				}
@@ -46,14 +48,15 @@ export default function useApiCalls(): RequestSpeakersProps {
 				console.log("error thrown in updateWithDelay:", error);
 			}
 		}
-		insertWithDelay();
+		insertAsynchronously();
 	};
 
 	const updateSpeaker = (callback: () => void, speaker: SpeakerData): void => {
-		async function updateWithDelay() {
+		async function updateAsynchronously() {
 			try {
 				await axios.put<void>(`${restUrl}/${speaker.id}`, speaker);
-				setLoadingStatus(LoadingStatus.Loading);
+        const result = await axios.get<SpeakerData[]>(restUrl);
+				setSpeakerData(result.data);
 				if (callback) {
 					callback();
 				}
@@ -61,11 +64,11 @@ export default function useApiCalls(): RequestSpeakersProps {
 				console.log("error thrown in updateWithDelay:", error);
 			}
 		}
-		updateWithDelay();
+		updateAsynchronously();
 	};
 
 	useEffect((): void | (() => void) => {
-		async function loadSpeakersWithDelay(): Promise<void> {
+		async function retrieveAsynchronously(): Promise<void> {
 			try {
 				const result = await axios.get<SpeakerData[]>(restUrl);
 				setSpeakerData(result.data);
@@ -75,8 +78,10 @@ export default function useApiCalls(): RequestSpeakersProps {
 				setLoadingStatus(LoadingStatus.Failed);
 			}
 		}
-		loadSpeakersWithDelay();
-	}, [loadingStatus]);
+		retrieveAsynchronously();
+	}, []);
 
 	return { deleteSpeaker, errorMessage, insertSpeaker, loadingStatus, speakerData: speakerData, updateSpeaker };
 }
+
+export default useRestApi;

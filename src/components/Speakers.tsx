@@ -2,7 +2,7 @@ import SpeakerFilterContextProvider from "../contexts/SpeakerFilterContextProvid
 import SpeakerList from "./SpeakerList";
 import SpeakersToolbar from "./SpeakersToolbar";
 
-export default function Speakers() {
+function Speakers() {
 	return (
 		<SpeakerFilterContextProvider>
 			<SpeakersToolbar />
@@ -10,3 +10,5 @@ export default function Speakers() {
 		</SpeakerFilterContextProvider>
 	);
 }
+
+export default Speakers;

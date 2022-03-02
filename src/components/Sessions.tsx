@@ -3,7 +3,7 @@ import { SpeakerContext, SpeakerContextProps, SpeakerFilterContext, SpeakerFilte
 import { SessionData } from "../types/speaker-data";
 import Session from "./Session";
 
-export default function Sessions() {
+function Sessions() {
 	const {
 		speaker: { sessions },
 	} = useContext<SpeakerContextProps>(SpeakerContext);
@@ -19,3 +19,5 @@ export default function Sessions() {
 		</div>
 	);
 }
+
+export default Sessions;

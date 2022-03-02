@@ -1,7 +1,7 @@
 import { MouseEvent, useContext, useState } from "react";
 import { SpeakerContext, SpeakerContextProps } from "../types/contexts";
 
-export default function SpeakerFavorite() {
+function SpeakerFavorite() {
 	const { speaker, updateSpeaker } = useContext<SpeakerContextProps>(SpeakerContext);
 	const [isUpdatingFavorite, setIsUpdatingFavorite] = useState(false);
 	const { favorite } = speaker;
@@ -24,3 +24,5 @@ export default function SpeakerFavorite() {
 		</div>
 	);
 }
+
+export default SpeakerFavorite;

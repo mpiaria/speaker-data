@@ -7,8 +7,10 @@ type ThemeProviderProps = {
 	initialTheme: Theme;
 };
 
-export default function ThemeContextProvider({ children, initialTheme }: PropsWithChildren<ThemeProviderProps>) {
+function ThemeContextProvider({ children, initialTheme }: PropsWithChildren<ThemeProviderProps>) {
 	const { setTheme, theme } = useTheme(initialTheme);
 
 	return <ThemeContext.Provider value={{ setTheme, theme }}>{children}</ThemeContext.Provider>;
 }
+
+export default ThemeContextProvider;
