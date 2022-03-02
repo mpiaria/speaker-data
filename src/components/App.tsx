@@ -3,7 +3,7 @@ import Header from "./Header";
 import Layout from "./Layout";
 import Speakers from "./Speakers";
 
-export default function App() {
+function App() {
 	return (
 		<Layout initialTheme={Theme.Dark}>
 			<div>
@@ -13,3 +13,5 @@ export default function App() {
 		</Layout>
 	);
 }
+
+export default App;

@@ -3,7 +3,7 @@ import { SpeakerFilterContext, SpeakerFilterContextProps, ThemeContext, ThemeCon
 import { retrieveEventYears } from "../types/speaker-data";
 import { Theme } from "../types/theme";
 
-export default function SpeakersToolbar() {
+function SpeakersToolbar() {
 	const { eventYear, setEventYear, setSearchQuery, setShowSessions, showSessions } = useContext<SpeakerFilterContextProps>(SpeakerFilterContext);
 	const { setTheme, theme } = useContext<ThemeContextProps>(ThemeContext);
 
@@ -73,3 +73,5 @@ export default function SpeakersToolbar() {
 		</section>
 	);
 }
+
+export default SpeakersToolbar;

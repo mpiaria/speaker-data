@@ -7,7 +7,7 @@ type SpeakerFilterProviderProps = {
 	initialEventYear?: string;
 };
 
-export default function SpeakerFilterContextProvider({
+function SpeakerFilterContextProvider({
 	children,
 	initialShowSessions = false,
 	initialEventYear = "2019",
@@ -20,3 +20,5 @@ export default function SpeakerFilterContextProvider({
 		</SpeakerFilterContext.Provider>
 	);
 }
+
+export default SpeakerFilterContextProvider;

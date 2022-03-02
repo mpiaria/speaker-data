@@ -1,7 +1,7 @@
 import Head from "next/head";
 import App from "../src/components/App";
 
-export default function IndexPage() {
+function IndexPage() {
 	return (
 		<>
 			<Head key="index-page-head">
@@ -11,3 +11,5 @@ export default function IndexPage() {
 		</>
 	);
 }
+
+export default IndexPage;

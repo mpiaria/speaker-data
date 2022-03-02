@@ -12,7 +12,7 @@ type SpeakerInfoProps = {
 	twitterHandle: string;
 };
 
-export default function SpeakerInfo() {
+function SpeakerInfo() {
 	const {
 		speaker: { bio, company, favorite, firstName, lastName, twitterHandle },
 	} = useContext<SpeakerContextProps>(SpeakerContext);
@@ -41,3 +41,5 @@ export default function SpeakerInfo() {
 		</div>
 	);
 }
+
+export default SpeakerInfo;

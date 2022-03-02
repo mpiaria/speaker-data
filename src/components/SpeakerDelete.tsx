@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { SpeakerContext, SpeakerContextProps } from "../types/contexts";
 
-export default function SpeakerDelete() {
+function SpeakerDelete() {
 	const { deleteSpeaker, speaker } = useContext<SpeakerContextProps>(SpeakerContext);
 	return (
 		<span className="session w-100">
@@ -21,3 +21,5 @@ export default function SpeakerDelete() {
 		</span>
 	);
 }
+
+export default SpeakerDelete;

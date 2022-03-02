@@ -1,15 +1,15 @@
 import { useContext } from "react";
 import ReactPlaceholder from "react-placeholder/lib";
-import useApiCalls from "../hooks/use-api-calls";
+import useRestApi from "../hooks/use-api-calls";
 import { SpeakerFilterContext, SpeakerFilterContextProps } from "../types/contexts";
 import { LoadingStatus } from "../types/loading-status";
 import { SessionData, SpeakerData } from "../types/speaker-data";
 import Speaker from "./Speaker";
 import SpeakerAdd from "./SpeakerAdd";
 
-export default function SpeakerList() {
+function SpeakerList() {
 	const { eventYear, searchQuery } = useContext<SpeakerFilterContextProps>(SpeakerFilterContext);
-	const { deleteSpeaker, errorMessage, insertSpeaker, loadingStatus, speakerData, updateSpeaker } = useApiCalls();
+	const { deleteSpeaker, errorMessage, insertSpeaker, loadingStatus, speakerData, updateSpeaker } = useRestApi();
 
 	return loadingStatus === LoadingStatus.Failed ? (
 		<div className="text-danger">
@@ -34,3 +34,5 @@ export default function SpeakerList() {
 		</div>
 	);
 }
+
+export default SpeakerList;

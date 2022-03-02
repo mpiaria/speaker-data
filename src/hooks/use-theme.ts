@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Theme } from "../types/theme";
 
-export default function useTheme(initialTheme = Theme.Dark.valueOf()) {
+function useTheme(initialTheme = Theme.Dark.valueOf()) {
 	const [theme, setTheme] = useState(initialTheme);
 
 	return {
@@ -9,3 +9,5 @@ export default function useTheme(initialTheme = Theme.Dark.valueOf()) {
 		theme,
 	};
 }
+
+export default useTheme;

@@ -7,7 +7,7 @@ type SpeakerAddProps = {
 	insertSpeaker: (callback: () => void, speaker: SpeakerData) => void;
 };
 
-export default function SpeakerAdd({ eventYear, insertSpeaker }: SpeakerAddProps) {
+function SpeakerAdd({ eventYear, insertSpeaker }: SpeakerAddProps) {
 	return (
 		<a className="addSes" href="#">
 			<i
@@ -41,3 +41,5 @@ export default function SpeakerAdd({ eventYear, insertSpeaker }: SpeakerAddProps
 		</a>
 	);
 }
+
+export default SpeakerAdd;

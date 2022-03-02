@@ -7,7 +7,7 @@ type LayoutProps = {
 	initialTheme: Theme;
 };
 
-export default function Layout({ children, initialTheme }: PropsWithChildren<LayoutProps>) {
+function Layout({ children, initialTheme }: PropsWithChildren<LayoutProps>) {
 	return (
 		<ThemeContextProvider initialTheme={initialTheme}>
 			<LayoutWithoutThemeProvider>{children}</LayoutWithoutThemeProvider>
@@ -20,3 +20,5 @@ function LayoutWithoutThemeProvider({ children }: PropsWithChildren<{}>) {
 
 	return <div className={`container-fluid ${theme.valueOf()}`}>{children}</div>;
 }
+
+export default Layout;
