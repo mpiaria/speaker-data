@@ -6,14 +6,14 @@ function SpeakerImage() {
 	const {
 		speaker: { firstName, id, lastName },
 	} = useContext<SpeakerContextProps>(SpeakerContext);
-  const [error, setError] = useState(false);
-  const [source, setSource] = useState(`/images/speaker-${id}`);
+	const [error, setError] = useState(false);
+	const [source, setSource] = useState(`/images/speaker-${id}`);
 
-  useEffect(() => {
-    setSource(`/images/speaker-${id}.jpg`);
-  }, [id]);
+	useEffect((): void | (() => void) => {
+		setSource(`/images/speaker-${id}.jpg`);
+	}, [id]);
 
-  const onError: () => void = () => {
+	const onError: () => void = () => {
 		if (!error) {
 			setSource("/images/speaker-99999.jpg");
 			setError(true);

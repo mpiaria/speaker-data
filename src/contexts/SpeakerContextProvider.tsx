@@ -9,13 +9,7 @@ type SpeakerContextProviderProps = {
 	updateSpeaker: (callback: () => void, speaker: SpeakerData) => void;
 };
 
-function SpeakerContextProvider({
-	children,
-	deleteSpeaker,
-	insertSpeaker,
-	speaker,
-	updateSpeaker,
-}: PropsWithChildren<SpeakerContextProviderProps>) {
+function SpeakerContextProvider({ children, deleteSpeaker, insertSpeaker, speaker, updateSpeaker }: PropsWithChildren<SpeakerContextProviderProps>) {
 	return <SpeakerContext.Provider value={{ deleteSpeaker, insertSpeaker, speaker, updateSpeaker }}>{children}</SpeakerContext.Provider>;
 }
 
