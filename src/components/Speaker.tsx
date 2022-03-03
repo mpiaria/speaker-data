@@ -17,7 +17,7 @@ type SpeakerProps = {
 	updateSpeaker: (callback: () => void, speaker: SpeakerData) => void;
 };
 
-const SpeakerNoErrorBoundary = React.memo(function Speaker({ deleteSpeaker, insertSpeaker, speakerData, updateSpeaker }: SpeakerProps) {
+function SpeakerNoErrorBoundary({ deleteSpeaker, insertSpeaker, speakerData, updateSpeaker }: SpeakerProps) {
 	const { showSessions } = useContext<SpeakerFilterContextProps>(SpeakerFilterContext);
 
 	return (
@@ -32,11 +32,13 @@ const SpeakerNoErrorBoundary = React.memo(function Speaker({ deleteSpeaker, inse
 			</div>
 		</SpeakerContextProvider>
 	);
-}, propsAreEqual);
+}
 
 function propsAreEqual(prevProps: Readonly<React.PropsWithChildren<SpeakerProps>>, nextProps: Readonly<React.PropsWithChildren<SpeakerProps>>): boolean {
 	return prevProps.speakerData.favorite === nextProps.speakerData.favorite && prevProps.speakerData.id === nextProps.speakerData.id;
 }
+
+const MemoizedSpeakerNoErrorBoundary = React.memo(SpeakerNoErrorBoundary, propsAreEqual);
 
 function Speaker(props: SpeakerProps) {
 	const errorUI: React.ReactNode = (
@@ -50,7 +52,7 @@ function Speaker(props: SpeakerProps) {
 
 	return (
 		<ErrorBoundary errorUI={errorUI}>
-			<SpeakerNoErrorBoundary {...props}></SpeakerNoErrorBoundary>
+			<MemoizedSpeakerNoErrorBoundary {...props}></MemoizedSpeakerNoErrorBoundary>
 		</ErrorBoundary>
 	);
 }
