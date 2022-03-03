@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { memo, PropsWithChildren, useContext } from "react";
+import React from "react";
+import { useContext } from "react";
 import SpeakerContextProvider from "../contexts/SpeakerContextProvider";
 import { SpeakerFilterContext, SpeakerFilterContextProps } from "../types/contexts";
 import { SpeakerData } from "../types/speaker-data";
@@ -16,7 +17,7 @@ type SpeakerProps = {
 	updateSpeaker: (callback: () => void, speaker: SpeakerData) => void;
 };
 
-const SpeakerNoErrorBoundary = memo(function Speaker({ deleteSpeaker, insertSpeaker, speakerData, updateSpeaker }: SpeakerProps) {
+const SpeakerNoErrorBoundary = React.memo(function Speaker({ deleteSpeaker, insertSpeaker, speakerData, updateSpeaker }: SpeakerProps) {
 	const { showSessions } = useContext<SpeakerFilterContextProps>(SpeakerFilterContext);
 
 	return (
@@ -33,8 +34,8 @@ const SpeakerNoErrorBoundary = memo(function Speaker({ deleteSpeaker, insertSpea
 	);
 }, propsAreEqual);
 
-function propsAreEqual(prevProps: Readonly<PropsWithChildren<SpeakerProps>>, nextProps: Readonly<PropsWithChildren<SpeakerProps>>): boolean {
-	return prevProps.speakerData.favorite === nextProps.speakerData.favorite;
+function propsAreEqual(prevProps: Readonly<React.PropsWithChildren<SpeakerProps>>, nextProps: Readonly<React.PropsWithChildren<SpeakerProps>>): boolean {
+	return prevProps.speakerData.favorite === nextProps.speakerData.favorite && prevProps.speakerData.id === nextProps.speakerData.id;
 }
 
 function Speaker(props: SpeakerProps) {
