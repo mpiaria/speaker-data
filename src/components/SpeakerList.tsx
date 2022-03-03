@@ -22,10 +22,12 @@ function SpeakerList() {
 				<div className="row">
 					{speakerData
 						.filter((speaker: SpeakerData): boolean => speaker.sessions.some((session: SessionData): boolean => session.eventYear === eventYear))
-						.filter(
-							(speaker: SpeakerData): boolean =>
-								speaker.firstName?.toLowerCase()?.includes(searchQuery.toLowerCase()) || speaker.lastName?.toLowerCase()?.includes(searchQuery.toLowerCase()),
-						)
+						.filter((speaker: SpeakerData): boolean => {
+							console.log("searchQuery:", `'${searchQuery}'`);
+							console.log("firstName:", speaker.firstName);
+							console.log("lastName:", speaker.lastName);
+							return speaker.firstName.toLowerCase().includes(searchQuery.toLowerCase()) || speaker.lastName.toLowerCase().includes(searchQuery.toLowerCase());
+						})
 						.map((speaker: SpeakerData, index: number) => (
 							<Speaker deleteSpeaker={deleteSpeaker} insertSpeaker={insertSpeaker} key={index} speakerData={speaker} updateSpeaker={updateSpeaker} />
 						))}

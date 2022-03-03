@@ -1,9 +1,13 @@
 import Image from "next/image";
 import { useContext } from "react";
-import { ThemeContext, ThemeContextProps } from "../types/contexts";
+import { AuthContextProps, ThemeContext, ThemeContextProps } from "../types/contexts";
 import { Theme } from "../types/theme";
+import LoggedIn from "./LoggedIn";
+import NotLoggedIn from "./NotLoggedIn";
+import withAuth from "./with-auth";
+import { isEmpty } from "lodash";
 
-function Header() {
+function Header({ setUser = (_user: string) => {}, user = "" }: AuthContextProps) {
 	const { theme } = useContext<ThemeContextProps>(ThemeContext);
 
 	return (
@@ -17,10 +21,7 @@ function Header() {
 						<h4 className="header-title">Silicon Valley Code Camp</h4>
 					</div>
 					<div className={theme === Theme.Light.valueOf() ? "" : "text-info"}>
-						Hello, Mr. Smith &nbsp;&nbsp;
-						<span>
-							<a href="#">Sign Out</a>
-						</span>
+						{isEmpty(user) ? <NotLoggedIn setUser={setUser} user={user} /> : <LoggedIn setUser={setUser} user={user} />}
 					</div>
 				</div>
 			</div>
@@ -28,4 +29,4 @@ function Header() {
 	);
 }
 
-export default Header;
+export default withAuth(Header);
